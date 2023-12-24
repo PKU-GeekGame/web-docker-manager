@@ -1,0 +1,46 @@
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>正在启动题目</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <h1>正在启动题目</h1>
+    <br>
+    <p>几秒钟后会自动跳转</p>
+    <p>本页面不是题目的一部分</p>
+    <script>
+        function sleep(t) {
+            return new Promise(resolve=>{
+                setTimeout(resolve, t);
+            });
+        }
+        async function check_status(n_left) {
+            if(n_left<=0) {
+                alert('启动失败，可能是网络或者题目环境问题');
+                return;
+            }
+            await sleep(1000);
+            try {
+                token_arg = location.search;
+                let res = await fetch('status'+token_arg);
+                let j = await res.json();
+                if(j.code===200 || (j.code>=300 & j.code<400)) {
+                    location.href = j.url;
+                    return;
+                }
+            } catch(e) {
+                console.error(e);
+            }
+            await check_status(n_left-1);
+        }
+        check_status(20);
+    </script>
+</body>
+</html>

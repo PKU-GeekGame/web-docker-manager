@@ -1,0 +1,33 @@
+version: '2'
+services:
+  front:
+    build: .
+    ports:
+      - ${port}:8080
+    restart: always
+    read_only: true
+    ipc: shareable
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${data_dir}/vol:/vol
+    environment:
+      - hackergame_conn_interval=${conn_interval}
+      - hackergame_challenge_timeout=${challenge_timeout}
+      - hackergame_pids_limit=${pids_limit}
+      - hackergame_mem_limit=${mem_limit}
+      - hackergame_flag_path=${flag_path}
+      - hackergame_flag_rule=${flag_rule}
+      - hackergame_challenge_docker_name=${challenge_docker_name}
+      - hackergame_data_dir=${data_dir}
+      - hackergame_host_prefix=${host_prefix}
+      - hackergame_prob_path=${prob_path}
+      - hackergame_mount_points=${mount_points}
+      - hackergame_readonly=${readonly}
+      - hackergame_use_network=${use_network}
+      - hackergame_use_internal_network=${use_internal_network}
+      - hackergame_cpus=${cpus}
+      - hackergame_disk_limit=${disk_limit}
+      - hackergame_stdout_log=${stdout_log}
+      - hackergame_use_init=${use_init}
+      - hackergame_external_proxy_port=${external_proxy_port}
+      - TZ=Asia/Shanghai

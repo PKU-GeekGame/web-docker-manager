@@ -1,0 +1,18 @@
+version: '2'
+services:
+  challenge:
+    build: .
+    entrypoint: ["/bin/true"]
+    networks:
+      - problem
+  front:
+    extends:
+      file: ../manager/docker-compose.yml
+      service: front
+    depends_on:
+      - challenge
+    networks:
+      - problem
+networks:
+  problem:
+    external: true
